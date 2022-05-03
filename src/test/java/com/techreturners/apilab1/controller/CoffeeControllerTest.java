@@ -23,4 +23,22 @@ class CoffeeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string(expectedContent));
     }
 
+    @Test
+    public void testGetCoffeeDefault() throws Exception{
+        String expectedContent = "latte";
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.get("/coffee"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(expectedContent));
+    }
+
+    @Test
+    public void testGetCoffeeWithRequestParam() throws Exception{
+        String expectedContent = "mocha";
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.get("/coffee").param("name","mocha"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(expectedContent));
+    }
+
 }
